@@ -5,6 +5,7 @@
 package model;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 /**
  *
@@ -83,6 +84,16 @@ public class Pessoa {
         this.codigo = codigo;
     }
     
+    public String exibirDados(){
+        // Define o mesmo formatador usado para a criação da string
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        String aux = "Pessoa cadastrada: \n";
+        aux += "Nome: " + nome+ "\n";
+        aux += "CPF: " + CPF + "\n";
+        aux += "Telefone: "+telefone+"\n";
+        aux += "Data Nascimento: "+dataNascimento.format(formatter)+"\n";
     
+        return aux;
+    }
             
 }

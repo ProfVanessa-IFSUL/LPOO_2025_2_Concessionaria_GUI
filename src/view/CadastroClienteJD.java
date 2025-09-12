@@ -9,14 +9,17 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import javax.swing.JOptionPane;
+import model.Cliente;
 import model.Vendedor;
 
 /**
  *
  * @author vanessalagomachado
  */
-public class CadastroVendedorJD extends javax.swing.JDialog {
-    private Vendedor vendedor;
+public class CadastroClienteJD extends javax.swing.JDialog {
+    private Cliente cliente;
+    
+    
     
     // Define o mesmo formatador usado para a criação da string
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
@@ -25,12 +28,12 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
     /**
      * Creates new form CadastroVendedorJD
      */
-    public CadastroVendedorJD(java.awt.Frame parent, boolean modal) {
+    public CadastroClienteJD(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         
         
-        vendedor = new Vendedor();
+        cliente = new Cliente();
     }
 
     /**
@@ -51,16 +54,12 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
         txtDtNascimento = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         txtTelefone = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtSalario = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        txtComissao = new javax.swing.JTextField();
         btnSalvar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Cadastro de Vendedor");
+        jLabel1.setText("Cadastro de Cliente");
 
         lblNome.setText("Nome");
 
@@ -69,10 +68,6 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
         jLabel3.setText("Data Nascimento");
 
         jLabel4.setText("Telefone");
-
-        jLabel5.setText("Salário");
-
-        jLabel6.setText("Comissão");
 
         btnSalvar.setText("Salvar");
         btnSalvar.addActionListener(new java.awt.event.ActionListener() {
@@ -112,15 +107,11 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3)
-                                .addComponent(jLabel4)
-                                .addComponent(jLabel5)
-                                .addComponent(jLabel6))
+                                .addComponent(jLabel4))
                             .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtComissao)
                                 .addComponent(txtTelefone)
-                                .addComponent(txtDtNascimento)
-                                .addComponent(txtSalario, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                                .addComponent(txtDtNascimento)))))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -144,15 +135,7 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(txtComissao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
                     .addComponent(btnCancelar))
@@ -171,20 +154,17 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
 
         
         try{
-            this.vendedor.setNome(txtNome.getText());
-            this.vendedor.setCPF(txtCPF.getText());
+            this.cliente.setNome(txtNome.getText());
+            this.cliente.setCPF(txtCPF.getText());
             // sintaxe para conversão: LocalDate.parse(String com data, máscara)
-            this.vendedor.setDataNascimento(LocalDate.parse(txtDtNascimento.getText(), formatter));
-            this.vendedor.setTelefone(txtTelefone.getText());
-            this.vendedor.setSalario(Double.parseDouble(txtSalario.getText()));
-            this.vendedor.setComissao(Double.parseDouble(txtComissao.getText()));
+            this.cliente.setDataNascimento(LocalDate.parse(txtDtNascimento.getText(), formatter));
+            this.cliente.setTelefone(txtTelefone.getText());
+            
             
             this.dispose();
         } catch (DateTimeParseException e1){
             JOptionPane.showMessageDialog(rootPane, "Data inválida!! Informe data no formato dd-mm-yyyy\n"+e1);
-        } catch (NumberFormatException e2){
-            JOptionPane.showMessageDialog(rootPane, "Valores inválidos!! Em salário e comissão informe somente valores numéricos\n"+e2);
-        } catch (Exception e3){
+        }  catch (Exception e3){
             JOptionPane.showMessageDialog(rootPane, "Ocorreu um erro inesperado: \n"+e3);
         } 
         
@@ -208,20 +188,23 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CadastroVendedorJD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroClienteJD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CadastroVendedorJD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroClienteJD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CadastroVendedorJD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroClienteJD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CadastroVendedorJD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroClienteJD.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                CadastroVendedorJD dialog = new CadastroVendedorJD(new javax.swing.JFrame(), true);
+                CadastroClienteJD dialog = new CadastroClienteJD(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
@@ -233,20 +216,7 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
         });
     }
 
-    public Vendedor getVendedor() {
-        return vendedor;
-    }
-
-    public void setVendedor(Vendedor vendedor) {
-        this.vendedor = vendedor;
-        txtNome.setText(vendedor.getNome());
-        txtCPF.setText(vendedor.getCPF());
-        txtComissao.setText(""+vendedor.getComissao());
-        txtSalario.setText(""+vendedor.getSalario());
-        txtTelefone.setText(vendedor.getTelefone());
-        txtDtNascimento.setText(vendedor.getDataNascimento().format(formatter));
-        
-    }
+    
     
     
 
@@ -257,14 +227,23 @@ public class CadastroVendedorJD extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel lblNome;
     private javax.swing.JTextField txtCPF;
-    private javax.swing.JTextField txtComissao;
     private javax.swing.JTextField txtDtNascimento;
     private javax.swing.JTextField txtNome;
-    private javax.swing.JTextField txtSalario;
     private javax.swing.JTextField txtTelefone;
     // End of variables declaration//GEN-END:variables
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+        txtNome.setText(cliente.getNome());
+        txtCPF.setText(cliente.getCPF());
+       
+        txtTelefone.setText(cliente.getTelefone());
+        txtDtNascimento.setText(cliente.getDataNascimento().format(formatter));
+    }
 }

@@ -6,24 +6,26 @@ package view;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import model.Cliente;
 import model.Vendedor;
+import model.dao.ClienteDAO;
 import model.dao.VendedorDAO;
 
 /**
  *
  * @author vanessalagomachado
  */
-public class ListaVendedorJF extends javax.swing.JFrame {
+public class ListaClienteJF extends javax.swing.JFrame {
 
-    VendedorDAO dao;
+    ClienteDAO dao;
     /**
      * Creates new form ListaVendedorJF
      */
-    public ListaVendedorJF() {
+    public ListaClienteJF() {
         initComponents();
         
-        dao = new VendedorDAO();
-        loadTabelaVendedores();
+        dao = new ClienteDAO();
+        loadTabelaClientes();
     }
 
     /**
@@ -46,20 +48,20 @@ public class ListaVendedorJF extends javax.swing.JFrame {
 
         tblVendedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Nome", "CPF", "Salário", "Comissão"
+                "Nome", "CPF"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.Double.class, java.lang.Double.class
+                java.lang.Object.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -106,15 +108,15 @@ public class ListaVendedorJF extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 422, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNovo)
                         .addGap(18, 18, 18)
                         .addComponent(btnEditar)
                         .addGap(18, 18, 18)
                         .addComponent(btnRemover)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(27, 27, 27)
                         .addComponent(btnInfo)))
                 .addContainerGap(19, Short.MAX_VALUE))
         );
@@ -136,51 +138,55 @@ public class ListaVendedorJF extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        CadastroVendedorJD telaCadastro = new CadastroVendedorJD(this, rootPaneCheckingEnabled);
+        CadastroClienteJD telaCadastro = new CadastroClienteJD(this, rootPaneCheckingEnabled);
         telaCadastro.setVisible(true);
         
-        Vendedor novoVendedor = telaCadastro.getVendedor();
+        Cliente novo = telaCadastro.getCliente();
         //JOptionPane.showMessageDialog(rootPane, novoVendedor);
-        dao.addVendedor(novoVendedor);
-        loadTabelaVendedores();
+        dao.addCliente(novo);
+        loadTabelaClientes();
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         if(tblVendedores.getSelectedRow() != -1){
-            Vendedor obj_vendedor = (Vendedor)tblVendedores.getModel().getValueAt(tblVendedores.getSelectedRow(), 0); 
-            JOptionPane.showMessageDialog(rootPane, obj_vendedor.exibirDados());
+            Cliente obj = (Cliente)tblVendedores.getModel().
+                    getValueAt(tblVendedores.getSelectedRow(), 0); 
+            JOptionPane.showMessageDialog(rootPane, obj.exibirDados());
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um vendedor");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um cliente");
         }
     }//GEN-LAST:event_btnInfoActionPerformed
 
     private void btnRemoverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoverActionPerformed
         if(tblVendedores.getSelectedRow() != -1){
-            Vendedor obj_vendedor = (Vendedor)tblVendedores.getModel().getValueAt(tblVendedores.getSelectedRow(), 0); 
-            int op_remover = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover "+obj_vendedor+"?");
+            Cliente obj = (Cliente)tblVendedores.getModel().
+                    getValueAt(tblVendedores.getSelectedRow(), 0); 
+            int op_remover = JOptionPane.showConfirmDialog(rootPane, "Tem certeza que deseja remover "+obj+"?");
             if(op_remover == JOptionPane.YES_OPTION){
-                dao.removerVendedor(obj_vendedor);
-                JOptionPane.showMessageDialog(rootPane, "Vendedor removido com sucesso... ");
-                loadTabelaVendedores();
+                dao.removerCliente(obj);
+                JOptionPane.showMessageDialog(rootPane, "Cliente removido com sucesso... ");
+                loadTabelaClientes();
             }
             
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um vendedor");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um cliente");
         }
     }//GEN-LAST:event_btnRemoverActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if(tblVendedores.getSelectedRow() != -1){
-            Vendedor obj_vendedor = (Vendedor)tblVendedores.getModel().getValueAt(tblVendedores.getSelectedRow(), 0); 
-            CadastroVendedorJD telaEdicao = new CadastroVendedorJD(this, rootPaneCheckingEnabled);
-            telaEdicao.setVendedor(obj_vendedor);
+            Cliente obj = (Cliente)tblVendedores.getModel().
+                    getValueAt(tblVendedores.getSelectedRow(), 0); 
+            
+            CadastroClienteJD telaEdicao = new CadastroClienteJD(this, rootPaneCheckingEnabled);
+            telaEdicao.setCliente(obj);
             
             telaEdicao.setVisible(true);
-            loadTabelaVendedores();
+            loadTabelaClientes();
             
             
         } else {
-            JOptionPane.showMessageDialog(rootPane, "Selecione um vendedor");
+            JOptionPane.showMessageDialog(rootPane, "Selecione um cliente");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -201,37 +207,38 @@ public class ListaVendedorJF extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ListaVendedorJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaClienteJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ListaVendedorJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaClienteJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ListaVendedorJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaClienteJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ListaVendedorJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListaClienteJF.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ListaVendedorJF().setVisible(true);
+                new ListaClienteJF().setVisible(true);
             }
         });
     }
     
-    public void loadTabelaVendedores(){
+    public void loadTabelaClientes(){
         
         // Obtém o modelo da tabela - vincular o que definimos no Desing
         DefaultTableModel modelo = (DefaultTableModel) tblVendedores.getModel();
         //limpar as linhas e popular 
         modelo.setNumRows(0);
         
-        for(Vendedor vendedor: dao.listaVendedores()){
+        for(Cliente obj: dao.listaClientes()){
             Object[] linha = {
-                vendedor, 
-                    vendedor.getCPF(), 
-                    vendedor.getSalario(), 
-                    vendedor.getComissao()
+                    obj, 
+                    obj.getCPF()
                             };
             modelo.addRow(linha);
         }

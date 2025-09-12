@@ -28,14 +28,11 @@ public class Vendedor extends Pessoa{
         this.comissao = comissao;
     }
 
-    @Override
-    public String toString() {
-        return super.toString() + "Comissão: "+comissao;
-    }
+    
     
     public String exibirDados(){
-        String aux = "Vendedor cadastrado: \n";
-        aux += "Salário" + salario;
+        String aux = super.exibirDados()+"\n";
+        aux += "Salário" + salario + "\n";
         aux += "Comissão:" + comissao + "\n";
     
         return aux;
