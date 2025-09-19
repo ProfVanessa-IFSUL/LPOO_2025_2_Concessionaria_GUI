@@ -30,6 +30,7 @@ public class PrincipalJF extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         miVendedor = new javax.swing.JMenuItem();
         miCliente = new javax.swing.JMenuItem();
+        miVeiculo = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,6 +52,14 @@ public class PrincipalJF extends javax.swing.JFrame {
             }
         });
         jMenu1.add(miCliente);
+
+        miVeiculo.setText("Veículo");
+        miVeiculo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miVeiculoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(miVeiculo);
 
         jMenuBar1.add(jMenu1);
 
@@ -82,6 +91,11 @@ public class PrincipalJF extends javax.swing.JFrame {
         ListaClienteJF telaCliente = new ListaClienteJF();
         telaCliente.setVisible(true);
     }//GEN-LAST:event_miClienteActionPerformed
+
+    private void miVeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miVeiculoActionPerformed
+        ListaVeiculoJF telaVeiculo = new ListaVeiculoJF();
+        telaVeiculo.setVisible(true);
+    }//GEN-LAST:event_miVeiculoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -123,6 +137,7 @@ public class PrincipalJF extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem miCliente;
+    private javax.swing.JMenuItem miVeiculo;
     private javax.swing.JMenuItem miVendedor;
     // End of variables declaration//GEN-END:variables
 }

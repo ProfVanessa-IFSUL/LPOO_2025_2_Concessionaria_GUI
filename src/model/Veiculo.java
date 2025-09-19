@@ -75,7 +75,7 @@ public class Veiculo {
 
     @Override
     public String toString() {
-        return placa + "Marca: "+marca+" - Modelo: "+modelo;
+        return placa;
     }
     
     public String exibirDados(){
